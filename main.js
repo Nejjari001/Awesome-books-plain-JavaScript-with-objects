@@ -72,3 +72,15 @@ function addBookToPage (box) {
   });
   
 }
+
+function addDataToLocalStorage (box) {
+  window.localStorage.setItem("books", JSON.stringify(box));
+}
+    
+function getItemsFromLocalStorage (){
+  let data = window.localStorage.getItem("books");
+  if (data){
+    let books = JSON.parse(data);
+    addBookToPage (books);
+  }
+}
