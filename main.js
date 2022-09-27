@@ -1,5 +1,4 @@
 let section=document.getElementById('section');
-let bookDiv = document.getElementsByClassName('books');
 let addButton = document.getElementById('add');
 let title= document.getElementById('title');
 let author= document.getElementById('author');
@@ -41,8 +40,13 @@ function addBookToBox (titleMsg, authorMsg){
 }
 
 const deleteBook = (e) => {
+ 
   e.parentElement.parentElement.parentElement.remove();
+  
 }
+
+deleteBook ();
+
 
 function addBookToPage (box) {
   // Empty Div Books
