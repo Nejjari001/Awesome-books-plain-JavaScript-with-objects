@@ -40,12 +40,18 @@ function addBookToBox (titleMsg, authorMsg){
   addDataToLocalStorage(box);
 }
 
+const deleteBook = (e) => {
+  e.parentElement.parentElement.parentElement.remove();
+}
+
 function addBookToPage (box) {
   // Empty Div Books
-  bookDiv.innerHTML = "";
+  // bookDiv.innerHTML = "";
+  section.innerHTML = "";
 
   // Looping On Array Of Books
   box.forEach(book => {
+    
     section.innerHTML += `
     <div id='book'>
       <label for="title">${book.title}</label><br>
@@ -65,16 +71,4 @@ function addBookToPage (box) {
     author.value = '';
   });
   
-}
-
-function addDataToLocalStorage (box) {
-window.localStorage.setItem("books", JSON.stringify(box));
-}
-  
-function getItemsFromLocalStorage (){
-  let data = window.localStorage.getItem("books");
-  if (data){
-    let books = JSON.parse(data);
-    addBookToPage (books);
-  }
 }
