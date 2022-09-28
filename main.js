@@ -11,8 +11,8 @@ const box = JSON.parse(localStorage.getItem('books')) || [];
 
 class Library {
   constructor(title, author) {
-    this.title = title;
     this.author = author;
+    this.title = title;
   }
 
   addBook() {
