@@ -1,0 +1,102 @@
+/* Empty css file */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  margin-left: 1rem;
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.library {
+  margin: 1rem 0 2rem 0;
+  text-align: center;
+}
+
+.library-book {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.3rem;
+  padding-right: 1rem;
+  border-bottom: 1px solid black;
+  padding-bottom: 0.5rem;
+}
+
+.library-books {
+  width: 90vw;
+  margin: 0 auto;
+}
+
+.book-title,
+.book-author {
+  text-transform: capitalize;
+}
+
+form button {
+  float: right;
+}
+
+.library-book .btn-rmv,
+form button {
+  padding: 0.1rem 0.3rem;
+  box-shadow: 3px 3px 3px black;
+}
+
+.library-book button {
+  margin-left: auto;
+}
+
+form {
+  width: 50vw;
+  margin: 0 auto;
+  margin-top: 2.2rem;
+}
+
+form * {
+  margin-top: 1rem;
+}
+
+form input {
+  width: 100%;
+  padding: 0.5rem;
+  border: solid 2px;
+}
+
+form h2 {
+  text-align: center;
+}
+
+form h2 span {
+  border-top: 2px solid black;
+  padding-top: 1rem;
+}
+
+.border {
+  border: 2.5px solid black;
+}
+
+.errorMsg {
+  color: red;
+}
