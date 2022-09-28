@@ -1,90 +1,70 @@
-let section=document.getElementById('section');
-let addButton = document.getElementById('add');
-let title= document.getElementById('title');
-let author= document.getElementById('author');
-// let errorMsg = document.getElementsByClassName('errorMsg');
-// let form = document.querySelector('form');
+const addButton = document.getElementById('add');
+const titleInput= document.getElementById('title');
+const authorInput= document.getElementById('author');
+const libraryBooksEl = document.querySelector('.library-books');
+const errorMsg = document.getElementsByClassName('errorMsg');
+const form = document.querySelector('form');
 
 // Empty array to store the books
-let box = [];
+const box = JSON.parse(localStorage.getItem('books')) || [];
 
-// CHECK If There Is Books In Local Storage
-if(localStorage.getItem("books")){
-  box = JSON.parse(localStorage.getItem("books"));
-}
 
-getItemsFromLocalStorage ();
-// Add Book
+class Library {
+  constructor(title, author) {
+    this.title = title;
+    this.author = author;
+  }
 
-addButton.onclick = function () {
-  // event.preventDefault();
-  if(title.value !== "" && author.value !== ""){
-    addBookToBox(title.value, author.value);
-    title.value = "";
-    author.value = "";
+  addBook() {
+    addButton.addEventListener('click', () => {
+        const title = titleInput.value;
+        const author = authorInput.value;
+      if (title && author) {
+        const newBook = {
+          title,
+          author,
+        };
+        box.push(newBook);
+        localStorage.setItem('box', JSON.stringify(box));
+        this.renderBooks();
+        form.reset();
+        errorMsg.innerHTML = '';
+      } else {
+        errorMsg.innerHTML = 'Input something';
+      }
+    });
+  }
+
+  renderBooks() {
+    if (!box.length) {
+      libraryBooksEl.innerHTML = 'No books added';
+    } else {
+      let markup = '';
+      box.forEach((elem, index) => {
+        markup += `<div class="library-book" style="background-color: ${index % 2 && 'rgb(225, 223, 223)'}">
+        <p class="book-title">"${elem.title}"</p> <span> by </span>
+        <p class="book-author">${elem.author}</p>    
+        <button type="button" class="btn-rmv" id=${index}>Remove</button>
+    </div>`;
+      });
+      libraryBooksEl.innerHTML = markup;
+    }
+
+    const removeBook = () => {
+      const removeBtnsEl = [...document.getElementsByClassName('btn-rmv')];
+      removeBtnsEl.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          box.splice(e.target.id, 1);
+          localStorage.setItem('bookList', JSON.stringify(box));
+          this.renderBooks();
+        });
+      });
+    };
+    removeBook();
   }
 }
 
-function addBookToBox (titleMsg, authorMsg){
-  const book = {
-    id: Date.now(),
-    title:titleMsg,
-    author:authorMsg,
-  };
-  // Push Books To Box Array
-  box.push(book);
-  // Add books To page
-  addBookToPage(box);
-  // Add books To Local Storage
-  addDataToLocalStorage(box);
-}
+const awesomeBooks = new Library();
 
-const deleteBook = (e) => {
- 
-  e.parentElement.parentElement.parentElement.remove();
-  
-}
-
-deleteBook ();
-
-
-function addBookToPage (box) {
-  // Empty Div Books
-  // bookDiv.innerHTML = "";
-  section.innerHTML = "";
-
-  // Looping On Array Of Books
-  box.forEach(book => {
-    
-    section.innerHTML += `
-    <div id='book'>
-      <label for="title">${book.title}</label><br>
-      <label for="author">${book.author}</label>
-      <br><br>
-      <div>
-        Remove
-        <span>
-          <!-- <i class="fas fa-edit"></i> -->
-          <i onClick="deleteBook(this)" class="fas fa-trash-alt"></i>
-        </span>
-      </div>
-      <hr>
-    </div>
-    `;
-    title.value = '';
-    author.value = '';
-  });
-  
-}
-
-function addDataToLocalStorage (box) {
-  window.localStorage.setItem("books", JSON.stringify(box));
-}
-    
-function getItemsFromLocalStorage (){
-  let data = window.localStorage.getItem("books");
-  if (data){
-    let books = JSON.parse(data);
-    addBookToPage (books);
-  }
-}
+awesomeBooks.addBook();
+awesomeBooks.renderBooks();
